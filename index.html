@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Dijkstra's algorithm In Action with realmap">
+  <meta name="author" content="Fatih Şennik">
+
+
+  <title>Dijkstra's algorithm in Action with realmap</title>
+
+  
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+    crossorigin="anonymous">
+    <link 
+    rel="stylesheet" 
+    href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
+  <!-- Custom styles for this template -->
+  <link href="style/justified-nav.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="masthead">
+      <h3 class="text-muted">Dijkstra's algorithm in Action With RealMap</h3>
+
+      <nav class="navbar navbar-expand-md navbar-light bg-light rounded mb-3">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav text-md-center nav-justified w-100">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Navigation Project
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="freelancer@senniksoft.com">Send Messeage</button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="formd">
+                        <div class="form-group">
+                          <label for="recipient-name" class="form-control-label">Your Email:</label>
+                          <input type="text" class="form-control" id="sender-email">
+                        </div>
+                        <div class="form-group">
+                          <label for="message-text" class="form-control-label">Message:</label>
+                          <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button id="submit" type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <a class="nav-link" href="#">Say Hello :) </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.senniksoft.com">Hire Me !</a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1>How Does Dijkstra's algorithm work ?</h1>
+      <p class="lead">Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph, which may represent,
+        for example, road networks. It was conceived by computer scientist Edsger W. Dijkstra in 1958 and published three
+        years later. The algorithm exists in many variants; Dijkstra's original variant found the shortest path between two
+        nodes, but a more common variant fixes a single node as the "source" node and finds shortest paths from the source
+        to all other nodes in the graph, producing a shortest-path tree.</p>
+      <p>
+        <a class="btn btn-lg btn-success" href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" role="button">Read More on Wiki</a>
+      </p>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>How to Use it ?</h1>
+        <p class="lead">Click to add nodes and then right-click a node and then again right click on another node to link them each other. You can freely reposition them by dragging the nodes by holding at the center of a circle of the node and moving according to background map. In order to draw on the map effortlessly, you can enter Latitude and Longitude of Your desired location on the map and quickly go there by clicking get me there button. As for the Fun part, select starting node and then select end node and click to start to get the shortest path between selected nodes thanks to Dijkstra's algorithm. </p>
+
+      </div>
+    </div>
+
+    <!-- Main Map Canvas -->
+    <div class="row">
+
+      <div class="col-lg-12">
+
+
+
+        <form>
+
+
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label class="mr-sm-2" for="from">From</label>
+              <select id="from-starting" class="custom-select mb-2 mr-sm-2 mb-sm-0"></select>
+            </div>
+            <div class="col-auto">
+              <label class="mr-sm-2" for="to">To</label>
+              <select id="to-end" class="custom-select mb-2 mr-sm-2 mb-sm-0"></select>
+
+            </div>
+
+            <div class="col-auto">
+              <button type="button" id="clearmap" class="btn btn-danger">Clear Map</button>
+            </div>
+            <div class="col-auto">
+              <button type="button" id="getshortestroute" class="btn btn-success" title="find shortest path between nodes"> Start Route</button>
+            </div>
+            <div class="col-auto">
+              <label class="sr-only" for="inlineFormInput">Latitude</label>
+              <input type="text" class="form-control mb-2 mb-sm-0" id="latitude" placeholder="Enter Latitude">
+            </div>
+            <div class="col-auto">
+              <label class="sr-only" for="inlineFormInput">Longitude</label>
+              <input type="text" class="form-control mb-2 mb-sm-0" id="longitude" placeholder="Enter Longitude">
+            </div>
+            
+            <div class="col-auto">
+              <button type="button" id= "getmethere"class="btn btn-primary">Get Me There</button>
+            </div>
+           
+            <div class="col-auto" style="margin-top: 5px;">
+
+              <label class="mr-sm-2" for="inlineFormCustomSelect">Load Examples</label>
+              <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="setexample">
+                <option value="0">Ex:</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+               
+              </select>
+            </div>
+
+
+
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-12">
+
+
+        <div id="svg-map" style="width: 1110px; height: 800px" class="card">
+
+        </div>
+        <form style="margin-top:5px;">
+
+
+          <div class="form-row align-items-center">
+
+            <div class="col-auto">
+              <button type="button" class="btn btn-success" id="data-export"> Export Data</button>
+            </div>
+            <div class="col-auto">
+              <label class="custom-file">
+                <input type="file" id="data-import" class="custom-file-input">
+                <span class="custom-file-control">Import Data</span>
+              </label>
+
+
+            </div>
+
+
+
+
+
+
+          </div>
+
+
+
+        </form>
+      </div>
+    </div>
+
+
+    <!-- Site footer -->
+    <footer class="footer">
+      <p>&copy; Senniksoft 2017 | Fatih Şennik |
+        <script type="text/javascript">
+          emailE = 'senniksoft.com'
+          emailE = ('freelancer' + '@' + emailE)
+          document.write('<A href="mailto:' + emailE + '">' + emailE + '</a>')
+        </script>
+      </p>
+    </footer>
+
+  </div>
+  <!-- /container -->
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+  <!-- <script type="text/javascript" src="js/d3.v3.min.js"></script> Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+    crossorigin="anonymous"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    
+  
+  <script
+  src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+</script>
+
+  <script src="js/main.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>
