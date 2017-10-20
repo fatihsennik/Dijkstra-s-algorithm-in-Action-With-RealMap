@@ -17,7 +17,7 @@ var mapdata = {
 
 maps = L.map('svg-map').setView([41.070034, 28.806152], 10);
 mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; ' + mapLink + ' Contributors', maxZoom: 18,
 }).addTo(maps);
 maps._initPathRoot()
