@@ -1,6 +1,6 @@
 # Dijkstra algorithm in action with Real Map
 
-https://senniksoft.github.io/Dijkstra-s-algorithm-in-Action-With-RealMap/
+https://fatihsennik.github.io/Dijkstra-s-algorithm-in-Action-With-RealMap/
 
 ## How Does Dijkstra's algorithm work ?
 Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks. It was conceived by computer scientist Edsger W. Dijkstra in 1958 and published three years later. The algorithm exists in many variants; Dijkstra's original variant found the shortest path between two nodes, but a more common variant fixes a single node as the "source" node and finds shortest paths from the source to all other nodes in the graph, producing a shortest-path tree. [Read More On Wiki](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
